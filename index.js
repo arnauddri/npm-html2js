@@ -7,48 +7,57 @@ var path           = require('path');
 var through        = require('through2');
 var util           = require('util');
 
+var argv = require('yargs')
+  .default('j', true)
+  .describe('j', 'are templates jade files?')
+  .boolean('j')
+  .argv
+
+var isJade = argv.j
+
 var templateModule = fs.readFileSync(path.join(__dirname, './tmpl/templateModule.tmpl'), 'utf-8');
 var templateCache  = fs.readFileSync(path.join(__dirname, './tmpl/templateCache.tmpl'), 'utf-8');
 
-function jade2js() {
-  glob('**/*.tpl.jade', function (er, files) {
-    var cs = CombinedStream.create()
-    var tpl = [];
+var extension = (isJade) ? 'jade' : 'html';
 
-    async.eachSeries(
-      files,
-      function (file, done) {
-        cs.append(function (next) {
-          next(fs.createReadStream(path.resolve(file)))
-        })
-        done()
-      },
-      function (err) {
-        if (err)
-          throw err
+glob('**/*.tpl.' + extension, function (er, files) {
+  var cs = CombinedStream.create()
+  var tpl = [];
 
-        cs.pipe(through(function(chunk, enc, cb) {
-          var route = chunk.toString().split('\n')[0]
-          route = route.replace(/\/\/\ /g, '').replace(/'|"/g, '')
+  async.eachSeries(
+    files,
+    function (file, done) {
+      cs.append(function (next) {
+        next(fs.createReadStream(path.resolve(file)))
+      })
+      done()
+    },
+    function (err) {
+      if (err)
+        throw err
 
-          var html = chunk.toString();
+      cs.pipe(through(function(chunk, enc, cb) {
+        var route = chunk.toString().split('\n')[0]
+        route = route.replace(/\/\/\ /g, '').replace(/'|"/g, '')
+
+        var html = chunk.toString();
+
+        if (isJade)
           html = jade.render(chunk.toString(), { pretty: true });
-          html = html.replace(/\r?\n/g, '\\n\' +\n    \'');
 
-          var tmpl = util.format(templateCache, route, html)
+        html = html.replace(/\r?\n/g, '\\n\' +\n    \'');
 
-          tpl.push(tmpl)
+        var tmpl = util.format(templateCache, route, html)
 
-          cb();
-        }))
-      }
-    )
+        tpl.push(tmpl)
 
-    cs.on('end', function() {
-      var template = util.format(templateModule, 'app.template', tpl.join(''))
-      console.log(template);
-    })
+        cb();
+      }))
+    }
+  )
+
+  cs.on('end', function() {
+    var template = util.format(templateModule, 'app.template', tpl.join(''))
+    console.log(template);
   })
-}
-
-module.exports = jade2js;
+})

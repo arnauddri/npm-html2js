@@ -1,4 +1,4 @@
-# npm-html2js
+# npm-html2js [![Build Status](https://travis-ci.org/arnauddri/npm-html2js.svg?branch=master)](https://travis-ci.org/arnauddri/npm-html2js) 
 
 Standalone executable file to turn load your jade/html templates into your $templateCache
 

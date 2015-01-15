@@ -2,7 +2,11 @@
   "name": "npm-html2js",
   "version": "0.1.0",
   "description": "Standalone script to load all your Angular html/jade templates into the $templateCache using npm",
-  "main": "bin/index.js",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnauddri/npm-html2js"
+  },
   "keywords": "html2js, grunt-html2js, karma-html2js, jade, template, $templateCache, angular, workflow, npm",
   "dependencies": {
     "glob": "^4.3.2",
@@ -19,7 +23,7 @@
     "test": "mocha test/**.spec.js"
   },
   "bin": {
-    "npm-html2js": "./bin/index.js"
+    "npm-html2js": "./bin/npm-html2js.js"
   },
   "author": "arnauddri",
   "license": "MIT"

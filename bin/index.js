@@ -8,6 +8,8 @@ var path           = require('path');
 var through        = require('through2');
 var util           = require('util');
 
+var args = process.argv.slice(2);
+
 var argv = require('yargs')
   .default('j', true)
   .describe('j', 'are templates jade files?')
@@ -17,15 +19,50 @@ var argv = require('yargs')
   .describe('i', 'path to source file')
   .argv
 
-var isJade = argv.j
+var isJade;
 
 var templateModule = fs.readFileSync(path.join(__dirname, './../tmpl/templateModule.tmpl'), 'utf-8');
 var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCache.tmpl'), 'utf-8');
+var usage          = fs.readFileSync(path.join(__dirname, './../tmpl/usage.md')).toString()
 
-var filename  = argv.o || 'template.js'
-var extension = (isJade) ? 'jade' : 'html';
-var tplPath   = argv.i || '**/*.tpl.' + extension
-var file      = path.join(process.cwd(), filename);
+var filename   = 'template.js'
+var extension  = 'html';
+var tplPath    = '**/*.tpl.'
+var file       = path.join(process.cwd(), filename);
+var moduleName = 'app.template'
+
+var arg;
+while (args.length) {
+  arg = args.shift();
+  switch (arg) {
+    case '-h':
+    case '--help':
+      console.error(usage);
+      process.exit(0);
+      break;
+    case '-j':
+    case '--jade':
+      isJade = true
+      extension = (isJade) ? 'jade' : 'html';
+      break;
+    case '-i':
+    case '--input':
+      tplPath = arg
+      break;
+    case '-o':
+    case '--output':
+      filename = arg
+      break;
+    case '-m':
+    case '--module':
+      moduleName = arg
+      break;
+    default:
+      break;
+  }
+}
+
+tplPath = ('**/*.tpl.') ?  tplPath + extension : tplPath;
 
 glob(tplPath, function (er, files) {
   var cs = CombinedStream.create()
@@ -63,7 +100,7 @@ glob(tplPath, function (er, files) {
   )
 
   cs.on('end', function() {
-    var template = util.format(templateModule, 'app.template', tpl.join(''))
+    var template = util.format(templateModule, moduleName, tpl.join(''))
     fs.writeFileSync(file, template, 'utf8')
   })
 })

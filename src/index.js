@@ -21,7 +21,10 @@ module.exports = function(tplPath, output, moduleName, isJade) {
   output     = output || path.join(process.cwd(), filename);
   moduleName = moduleName || 'app.template'
 
-  glob(tplPath, function (er, files) {
+  glob(tplPath, function (err, files) {
+    if (err)
+      throw new Error(err)
+
     var cs = CombinedStream.create()
     var tpl = [];
 

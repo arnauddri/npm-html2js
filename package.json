@@ -1,8 +1,9 @@
 {
-  "name": "jade2js",
-  "version": "0.0.0",
-  "description": "Add your jade template files to your $templateCache",
-  "main": "index.js",
+  "name": "npm-html2js",
+  "version": "0.1.0",
+  "description": "Standalone script to load all your Angular html/jade templates into the $templateCache using npm",
+  "main": "bin/index.js",
+  "keywords": "html2js, grunt-html2js, karma-html2js, jade, template, $templateCache, angular, workflow, npm",
   "dependencies": {
     "glob": "^4.3.2",
     "jade": "^1.8.2",
@@ -15,6 +16,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "= <=>",
+  "bin": {
+    "npm-html2js": "./bin/index.js"
+  },
+  "author": "arnauddri",
   "license": "MIT"
 }

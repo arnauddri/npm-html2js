@@ -11,13 +11,14 @@ var templateModule = fs.readFileSync(path.join(__dirname, './../tmpl/templateMod
 var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCache.tmpl'), 'utf-8');
 
 module.exports = function(opts) {
+  opts = opts || {}
 
   var isJade = opts.isJade || false;
 
   var filename   = 'template.js'
   var extension  = (isJade) ? 'jade' : 'html';
 
-  var tplPath    = opts.tplPath || '**/*.tpl.'
+  var tplPath    = opts.tplPath || path.join(process.cwd(), '**/*.tpl.', extension)
   var output     = opts.output || path.join(process.cwd(), filename);
   var moduleName = opts.moduleName || 'app.template'
   var basePath   = opts.basePath;

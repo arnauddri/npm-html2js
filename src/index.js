@@ -21,6 +21,7 @@ module.exports = function(opts) {
   var output     = opts.output || path.join(process.cwd(), filename);
   var moduleName = opts.moduleName || 'app.template'
   var basePath   = opts.basePath;
+  var quotes     = opts.quotes;
 
   glob(tplPath, function (err, files) {
     if (err)
@@ -46,11 +47,15 @@ module.exports = function(opts) {
           var html = chunk.toString();
 
           if (basePath)
-            route = route.replace(basePath, '');
+            route = route.replace(basePath + '/', '');
           if (isJade)
             html = jade.render(html, { pretty: true });
 
           html = html.replace(/\r?\n/g, '\\n\' +\n    \'');
+
+          //if (quotes)
+            //html = html. replace("'", '"')
+
           var tmpl = util.format(templateCache, route, html)
           tpl.push(tmpl)
 

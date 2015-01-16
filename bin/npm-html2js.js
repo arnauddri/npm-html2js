@@ -43,6 +43,14 @@ while (args.length) {
     case '--module':
       opts.moduleName = args.shift()
       break;
+    case '-b':
+    case '--base':
+      opts.basePath = args.shift()
+      break;
+    case '-q':
+    case '--quotes':
+      opts.quotes = true
+      break;
     default:
       break;
   }

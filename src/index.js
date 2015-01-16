@@ -20,6 +20,7 @@ module.exports = function(opts) {
   var tplPath    = opts.tplPath || '**/*.tpl.'
   var output     = opts.output || path.join(process.cwd(), filename);
   var moduleName = opts.moduleName || 'app.template'
+  var basePath   = opts.basePath;
 
   glob(tplPath, function (err, files) {
     if (err)
@@ -41,9 +42,11 @@ module.exports = function(opts) {
         var filesIndex = 0;
         cs.pipe(through(function(chunk, enc, cb) {
           var route = files[filesIndex]
-          var html = chunk.toString();
-          html = html.replace(route, '')
 
+          var html = chunk.toString();
+
+          if (basePath)
+            route = route.replace(basePath, '');
           if (isJade)
             html = jade.render(html, { pretty: true });
 

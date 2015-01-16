@@ -6,16 +6,16 @@ var html2js = require('./../src/index.js');
 
 var args = process.argv.slice(2);
 
-var isJade = false;
 
 var templateModule = fs.readFileSync(path.join(__dirname, './../tmpl/templateModule.tmpl'), 'utf-8');
 var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCache.tmpl'), 'utf-8');
 var usage          = fs.readFileSync(path.join(__dirname, './../tmpl/usage.md')).toString()
 
-var filename;
-var extension  = 'html';
-var tplPath    = '**/*.tpl.'
-var moduleName = 'app.template'
+var opts = {};
+opts.isJade = false;
+opts.extension  = 'html';
+opts.tplPath    = '**/*.tpl.'
+opts.moduleName = 'app.template'
 
 var arg;
 while (args.length) {
@@ -28,28 +28,28 @@ while (args.length) {
       break;
     case '-j':
     case '--jade':
-      isJade = true
-      extension = (isJade) ? 'jade' : 'html';
+      opts.isJade = true
+      opts.extension = (opts.isJade) ? 'jade' : 'html';
       break;
     case '-i':
     case '--input':
-      tplPath = args.shift()
+      opts.tplPath = args.shift()
       break;
     case '-o':
     case '--output':
-      filename = args.shift()
+      opts.filename = args.shift()
       break;
     case '-m':
     case '--module':
-      moduleName = args.shift()
+      opts.moduleName = args.shift()
       break;
     default:
       break;
   }
 }
 
-var output = (filename) ? path.join(process.cwd(), filename) : null
+opts.output = (opts.filename) ? path.join(process.cwd(), opts.filename) : null
 
-tplPath = ('**/*.tpl.') ?  tplPath + extension : tplPath;
+opts.tplPath = ('**/*.tpl.') ?  opts.tplPath + opts.extension : opts.tplPath;
 
-html2js(tplPath, output, moduleName, isJade)
+html2js(opts)

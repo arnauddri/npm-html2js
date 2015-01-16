@@ -10,16 +10,16 @@ var util           = require('util');
 var templateModule = fs.readFileSync(path.join(__dirname, './../tmpl/templateModule.tmpl'), 'utf-8');
 var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCache.tmpl'), 'utf-8');
 
-module.exports = function(tplPath, output, moduleName, isJade) {
+module.exports = function(opts) {
 
-  isJade = isJade || false;
+  var isJade = opts.isJade || false;
 
   var filename   = 'template.js'
   var extension  = (isJade) ? 'jade' : 'html';
 
-  tplPath    = tplPath || '**/*.tpl.'
-  output     = output || path.join(process.cwd(), filename);
-  moduleName = moduleName || 'app.template'
+  var tplPath    = opts.tplPath || '**/*.tpl.'
+  var output     = opts.output || path.join(process.cwd(), filename);
+  var moduleName = opts.moduleName || 'app.template'
 
   glob(tplPath, function (err, files) {
     if (err)
@@ -31,21 +31,18 @@ module.exports = function(tplPath, output, moduleName, isJade) {
     async.eachSeries(
       files,
       function (file, done) {
-        cs.append(function (next) {
-          next(fs.createReadStream(path.resolve(file)))
-        })
+        cs.append(fs.createReadStream(path.resolve(file)))
         done()
       },
       function (err) {
         if (err)
           throw err
 
+        var filesIndex = 0;
         cs.pipe(through(function(chunk, enc, cb) {
-          var route = chunk.toString().split('\n')[0]
+          var route = files[filesIndex]
           var html = chunk.toString();
           html = html.replace(route, '')
-
-          route = route.replace(/\/\/\ /g, '').replace(/'|"/g, '')
 
           if (isJade)
             html = jade.render(html, { pretty: true });
@@ -53,6 +50,8 @@ module.exports = function(tplPath, output, moduleName, isJade) {
           html = html.replace(/\r?\n/g, '\\n\' +\n    \'');
           var tmpl = util.format(templateCache, route, html)
           tpl.push(tmpl)
+
+          filesIndex++
 
           cb();
         }))

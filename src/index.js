@@ -10,7 +10,7 @@ var util           = require('util');
 var templateModule = fs.readFileSync(path.join(__dirname, './../tmpl/templateModule.tmpl'), 'utf-8');
 var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCache.tmpl'), 'utf-8');
 
-module.exports = function(opts) {
+module.exports = function(opts, callback) {
   opts = opts || {}
 
   var isJade = opts.isJade || false;
@@ -70,6 +70,9 @@ module.exports = function(opts) {
     cs.on('end', function() {
       var template = util.format(templateModule, moduleName, tpl.join(''))
       fs.writeFileSync(output, template, 'utf8')
+
+      if (callback)
+        callback();
     })
   })
 }

@@ -13,12 +13,10 @@ var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCac
 module.exports = function(opts, callback) {
   opts = opts || {}
 
-  var isJade = opts.isJade || false;
 
   var filename   = 'template.js'
-  var extension  = (isJade) ? 'jade' : 'html';
 
-  var tplPath    = opts.tplPath || path.join(process.cwd(), '**/*.tpl.', extension)
+  var tplPath    = opts.tplPath || path.join(process.cwd(), '**/*.tpl.html')
   var output     = opts.output || path.join(process.cwd(), filename);
   var moduleName = opts.moduleName || 'app.template'
   var basePath   = opts.basePath;
@@ -53,7 +51,7 @@ module.exports = function(opts, callback) {
 
           if (basePath)
             route = route.replace(basePath + '/', '');
-          if (isJade)
+          if (route.indexOf('.jade'))
             html = jade.render(html, { pretty: true });
 
           html = html.replace(/\r?\n/g, '\\n\' +\n    \'');

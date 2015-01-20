@@ -12,7 +12,6 @@ var templateCache  = fs.readFileSync(path.join(__dirname, './../tmpl/templateCac
 var usage          = fs.readFileSync(path.join(__dirname, './../tmpl/usage.md')).toString()
 
 var opts = {};
-opts.isJade = false;
 opts.extension  = 'html';
 opts.tplPath    = '**/*.tpl.'
 opts.moduleName = 'app.template'
@@ -25,11 +24,6 @@ while (args.length) {
     case '--help':
       console.error(usage);
       process.exit(0);
-      break;
-    case '-j':
-    case '--jade':
-      opts.isJade = true
-      opts.extension = (opts.isJade) ? 'jade' : 'html';
       break;
     case '-i':
     case '--input':

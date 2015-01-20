@@ -39,6 +39,10 @@ while (args.length) {
     case '--output':
       opts.filename = args.shift()
       break;
+    case '-e':
+    case '--exclude':
+      opts.exclude = args.shift()
+      break;
     case '-m':
     case '--module':
       opts.moduleName = args.shift()

@@ -23,6 +23,7 @@ module.exports = function(opts, callback) {
   var moduleName = opts.moduleName || 'app.template'
   var basePath   = opts.basePath;
   var quotes     = opts.quotes;
+  var exclude    = opts.exclude || '';
 
   glob(tplPath, function (err, files) {
     if (err)
@@ -34,6 +35,9 @@ module.exports = function(opts, callback) {
     async.eachSeries(
       files,
       function (file, done) {
+        if (file.indexOf(exclude))
+          return done();
+
         cs.append(fs.createReadStream(path.resolve(file)))
         done()
       },

@@ -25,6 +25,21 @@ angular.module('template.js', []);
   }]);
 ```
 
+### Install
+
+Via npm:
+```
+npm install --save-dev npm-html2js
+```
+
+And load it in your build process in your ```package.json```:
+```
+  "scripts": {
+    "build": "npm-html2js -i 'files/**/*.html' -o 'dist/template.js'"
+  },
+```
+
+
 ### Options
 
 ##### Input

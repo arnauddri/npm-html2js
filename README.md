@@ -2,7 +2,7 @@
 
 Use npm as a build tool to load all your jade/html templates into your $templateCache.
 
-```
+```javascript
 $ npm-html2js -i 'src/**/*.jade' -o 'dist/template.js'
 angular.module('template.js', []);
   .run(['$templateCache', function($templateCache) {
@@ -28,12 +28,12 @@ angular.module('template.js', []);
 ### Install
 
 Via npm:
-```
+```shell
 npm install --save-dev npm-html2js
 ```
 
 And load it in your build process in your ```package.json```:
-```
+```json
   "scripts": {
     "build": "npm-html2js -i 'files/**/*.html' -o 'dist/template.js'"
   },
@@ -47,7 +47,7 @@ And load it in your build process in your ```package.json```:
 Path to your templates. The module supports globbing so you can use path like ```src/**/*.tpl.html```
 
 **example:**
-```
+```shell
   npm-html2js -i 'files/**/*.tpl.html'
 ```
 
@@ -56,7 +56,7 @@ Path to your templates. The module supports globbing so you can use path like ``
 Path to the expected output file.
 
 **example:**
-```
+```shell
   npm-html2js ... -o 'dist/template.js'
 ```
 
@@ -65,7 +65,7 @@ Path to the expected output file.
 The name of the parent Angular module for each set of templates. Defaults to the task target prefixed by templates.js
 
 **example:**
-```
+```shell
   npm-html2js ... -m 'myModule'
 ```
 
@@ -78,7 +78,7 @@ if the filename ends with ```.jade```, the task will automatically render file's
 The prefix relative to the project directory that should be stripped from each template path to produce a module identifier for the template. For example, a template located at ```src/projects/projects.tpl.html``` would be identified as just ```projects/projects.tpl.html```.
 
 **example:**
-```
+```shell
   npm-html2js ... -b 'src'
 ```
 

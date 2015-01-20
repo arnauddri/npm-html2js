@@ -62,6 +62,6 @@ while (args.length) {
 
 opts.output = (opts.filename) ? path.join(process.cwd(), opts.filename) : null
 
-opts.tplPath = ('**/*.tpl.') ?  opts.tplPath + opts.extension : opts.tplPath;
+opts.tplPath = (opts.tplPath === '**/*.tpl.') ?  opts.tplPath + opts.extension : opts.tplPath;
 
 html2js(opts)

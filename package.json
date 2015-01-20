@@ -14,7 +14,8 @@
     "combined-stream": "0.0.7",
     "async": "^0.9.0",
     "through2": "^0.6.3",
-    "yargs": "^1.3.3"
+    "yargs": "^1.3.3",
+    "chai": "^1.10.0"
   },
   "devDependencies": {
     "mocha": "^2.1.0"

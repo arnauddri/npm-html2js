@@ -1,13 +1,15 @@
 /* globals describe, it */
 'use strict';
 
+var expect = require('chai').expect
 var fs = require('fs');
 
 var html2js = require('../src/index.js');
 var path = require('path');
+var model = fs.readFileSync(path.join(__dirname, 'output/model.js'))
 
 describe('html2js', function() {
-  it('should work', function(done) {
+  it('should produce the expected js', function(done) {
     var opts ={
       isJade: true,
       extension: 'jade',
@@ -20,6 +22,7 @@ describe('html2js', function() {
     }
     html2js(opts, function() {
       var output = fs.readFileSync(opts.output)
+      expect(output.toString() === model.toString()).to.be.true;
       done();
     });
   });

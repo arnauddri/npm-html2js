@@ -51,7 +51,7 @@ module.exports = function(opts, callback) {
 
           if (basePath)
             route = route.replace(basePath + '/', '');
-          if (route.indexOf('.jade'))
+          if (route.indexOf('.jade') !== -1)
             html = jade.render(html, { pretty: true });
 
           html = html.replace(/'/g, '"');

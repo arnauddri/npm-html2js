@@ -54,7 +54,8 @@ module.exports = function(opts, callback) {
           if (route.indexOf('.jade') !== -1)
             html = jade.render(html, { pretty: true });
 
-          html = html.replace(/'/g, '"');
+          html = html.replace(/\\/g, '\\\\');
+          html = html.replace(/'/g, '\\\'');
           html = html.replace(/\r?\n/g, '\\n\' +\n    \'');
 
           //if (quotes)

@@ -1,6 +1,6 @@
 {
   "name": "npm-html2js",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Standalone script to load all your Angular html/jade templates into the $templateCache using npm",
   "main": "src/index.js",
   "repository": {

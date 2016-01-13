@@ -1,4 +1,4 @@
-# npm-html2js [![Build Status](https://travis-ci.org/arnauddri/npm-html2js.svg?branch=master)](https://travis-ci.org/arnauddri/npm-html2js) 
+# npm-html2js [![Build Status](https://travis-ci.org/arnauddri/npm-html2js.svg?branch=master)](https://travis-ci.org/arnauddri/npm-html2js)
 
 Use npm as a build tool to load all your jade/html templates into your $templateCache.
 
@@ -81,6 +81,16 @@ The prefix relative to the project directory that should be stripped from each t
 ```shell
   npm-html2js ... -b 'src'
 ```
+
+##### minify
+
+Minify the html before compiling to JS
+
+**example:**
+```shell
+  npm-html2js ... --minify
+```
+
 
 ##### help
 

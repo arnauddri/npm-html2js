@@ -9,3 +9,4 @@ Options:
   -h, --help              Display help information
   -m, --module            Module name
   -j, --jade              are those jade templates?
+  --minify                Minify the html

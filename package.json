@@ -9,12 +9,13 @@
   },
   "keywords": "html2js, grunt-html2js, karma-html2js, jade, template, $templateCache, angular, workflow, npm",
   "dependencies": {
-    "glob": "^4.3.2",
-    "jade": "^1.8.2",
-    "combined-stream": "0.0.7",
     "async": "^0.9.0",
-    "through2": "^0.6.3",
-    "chai": "^1.10.0"
+    "chai": "^1.10.0",
+    "combined-stream": "0.0.7",
+    "glob": "^4.3.2",
+    "htmlmin": "0.0.4",
+    "jade": "^1.8.2",
+    "through2": "^0.6.3"
   },
   "devDependencies": {
     "mocha": "^2.1.0"

@@ -49,6 +49,9 @@ while (args.length) {
     case '--quotes':
       opts.quotes = true
       break;
+    case '--minify':
+      opts.minify = true
+      break;
     default:
       break;
   }

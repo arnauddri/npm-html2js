@@ -17,6 +17,7 @@ describe('html2js', function() {
       moduleName: 'template.js',
       filename: 'example/output/template.js',
       basePath: 'example/files',
+      minify: true,
       quotes: true,
       output: path.join(__dirname, 'output/template.js')
     }

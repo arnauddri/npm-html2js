@@ -39,6 +39,14 @@ And load it in your build process in your ```package.json```:
   },
 ```
 
+#### Note for Windows users
+
+If running on Windows, make sure to [replace the single quotes with escaped double quotes](https://github.com/keithamus/npm-scripts-example/issues/5#issuecomment-70134543):
+```json
+  "scripts": {
+    "build": "npm-html2js -i \"files/**/*.html\" -o \"dist/template.js\""
+  },
+```
 
 ### Options
 
